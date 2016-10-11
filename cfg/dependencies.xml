@@ -1,0 +1,42 @@
+<dependencies>
+  <dependency type='git'>
+    <name>catch</name>
+    <url>https://github.com/philsquared/Catch.git</url>
+    <tag>v1.5.6</tag>
+    <target_dir>../Catch</target_dir>
+    <include_dir>include</include_dir>
+  </dependency>
+  <dependency type='git'>
+    <name>boost</name>
+    <url>https://github.com/boostorg/boost.git</url>
+    <tag>boost-1.56.0</tag>
+    <target_dir>../boost-1.56.0</target_dir>
+    <include_dir>.</include_dir>
+    <library32_dir>./stage/lib</library32_dir>
+    <library64_dir>./stage/lib</library64_dir>
+    <submodules>
+      <name>libs/assert</name>
+      <name>libs/atomic</name>
+      <name>libs/config</name>
+      <name>libs/core</name>
+      <name>libs/detail</name>
+      <name>libs/filesystem</name>
+      <name>libs/functional</name>
+      <name>libs/io</name>
+      <name>libs/iterator</name>
+      <name>libs/mpl</name>
+      <name>libs/predef</name>
+      <name>libs/preprocessor</name>
+      <name>libs/range</name>
+      <name>libs/static_assert</name>
+      <name>libs/smart_ptr</name>
+      <name>libs/system</name>
+      <name>libs/throw_exception</name>
+      <name>libs/type_traits</name>
+      <name>libs/utility</name>
+      <name>libs/wave</name>
+      <name>tools/build</name>
+      <name>tools/inspect</name>
+    </submodules>
+  </dependency>
+</dependencies>

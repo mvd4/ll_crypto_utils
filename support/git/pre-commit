@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+# git pre-commit hook for applying clang-format to files in commit
+
+import subprocess
+
+files = subprocess.check_output( ['git', 'diff-index', '--cached', '--name-only', 'HEAD'] ).split()
+for f in files:
+  f=f.decode('utf-8')
+  if f.endswith('.cpp') or f.endswith('.h'):
+    print( "Applying clang-format to " + f + "..." )
+    subprocess.call( ['clang-format', '-i', '-style=file' , f ] )
+    subprocess.call( ['git', 'add', f ] )

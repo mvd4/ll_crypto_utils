@@ -1,0 +1,64 @@
+# limelight crypto_utils appveyor configuration file
+
+version: configuring.{build}
+
+configuration:
+- Debug
+- Release
+
+platform:
+- Win32
+- x64
+
+image:
+- Visual Studio 2013
+- Visual Studio 2015
+
+
+clone_folder: c:\limelight\crypto_utils
+
+before_build:
+- cmd: >-
+    echo Building %CONFIGURATION% - %PLATFORM%
+
+    if %PLATFORM% == x64 (set LL_PLATFORM=x64) else (set LL_PLATFORM=x32)
+
+    cd %APPVEYOR_BUILD_FOLDER%
+
+    C:\Python35\python.exe -m venv env
+    
+    env\Scripts\activate.bat
+    
+    python support/python/library_version.py --appveyor
+    
+    python bootstrap.py --without boost
+
+    python support/python/configuration.py -n boost -i C:/Libraries/boost  --lib32 C:/Libraries/boost/lib32-msvc-12.0 --lib64 C:/Libraries/boost/lib64-msvc-12.0
+
+    python configure.py -a %LL_PLATFORM%
+
+build:
+  project: build/ll_crypto.sln
+
+
+test_script:
+- cmd: >-
+    echo Running Tests for %CONFIGURATION% - %PLATFORM%
+    
+    set LL_TEST_FOLDER=%APPVEYOR_BUILD_FOLDER%\bin\%LL_PLATFORM%\%CONFIGURATION%\
+    
+    cd %LL_TEST_FOLDER%
+
+    ll_crypto_test.exe -s -r junit -o test-report.junit.xml || echo Tests failed with return code %ERRORLEVEL%
+
+    python %APPVEYOR_BUILD_FOLDER%/support/python/fix_junit.py -f test-report.junit.xml
+
+
+on_finish:
+- ps: >-
+    $testReportPath = "$($env:LL_TEST_FOLDER)\test-report.junit.xml"
+
+    if([System.IO.File]::Exists($testReportPath)){
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testReportPath))
+    }

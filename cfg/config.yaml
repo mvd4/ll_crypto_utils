@@ -1,0 +1,25 @@
+# limelight build configuration file
+
+# note: you can use '/' as path delimiter also on Windows
+
+--- 
+
+# output directories
+build dir:          ./build
+library output dir: ./lib
+binary output dir:  ./bin
+
+
+# 3rd party directories
+catch include dir: <the absolute path to the catch include directory> 
+
+boost include dir: <the absolute path to the boost include directory> 
+boost library dir: <the absolute path to the boost library directory>           # CMake appends Debug / Release automatically
+boost library dir x64: <the absolute path to the boost 64bit library directory> # CMake appends Debug / Release automatically
+
+# cmake configuration
+cmake generator:    
+
+
+
+...

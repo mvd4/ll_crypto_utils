@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 2.8)
+
+# directories
+
+set( CATCH_INCLUDE_DIR "<the path to your catch include directory>" )
+set( BOOST_INCLUDE_DIR "<the path to your boost include directory>" )
+set( BOOST_LIB_DIR "<the path to your boost library directory>" )
+set( GTEST_INCLUDE_DIR "<the path to your gtest include directory>" )
+set( GTEST_LIB_DIR "<the path to your gtest library directory>" )
